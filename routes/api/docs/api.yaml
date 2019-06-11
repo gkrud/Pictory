@@ -1,0 +1,353 @@
+---
+  swagger: "2.0"
+  info: 
+    version: "1.0.0"
+    title: "pictory"
+    description: "pictory"
+    termsOfService: "http://localhost:3000"
+    contact: 
+      name: ""
+    license: 
+      name: "MIT"
+  host: "localhost:3000"
+  basePath: "/docs"
+  schemes: 
+    - "http"
+
+  paths: 
+        
+    /auth/register: 
+      post:
+        description: "회원가입"
+        operationId: register
+        parameters:
+          - 
+            name: "My infomation"
+            in: "body"
+            description: "개인 정보와 프로필 사진 form으로 전송"
+            schema:
+              type: object
+              properties:
+                username:
+                  type: "string"
+                id:
+                  type: "string"
+                pw:
+                  type: "string"
+                birth:
+                  type: "number"
+                active:
+                  type: "boolean"
+                myfile:
+                  type: "string"
+        responses:
+          "200":
+            description: "response"
+            schema:
+              properties:
+                messege:
+                  type: "string"
+          default: 
+            description: "unexpected error"
+            schema: 
+              $ref: "#/definitions/ErrorModel"
+
+    /auth/login:
+      post:
+        description: "이름, 전화번호 입력"
+        operationId: login
+        parameters:
+          -
+            name: "login"
+            in: "body"
+            description: "아이디와 비번, 자동로그인 보내기"
+            schema: 
+              type: object
+              properties:
+                id:
+                  type: "string"
+                pw:
+                  type: "string"
+                active:
+                  type: "boolean"
+        responses:
+          "200":
+            description: "response"
+            schema:
+              properties:
+                x-access-token: 
+                  type: "string"
+          default: 
+            description: "unexpected error"
+            schema: 
+              $ref: "#/definitions/ErrorModel"
+            
+    /Mypage/:
+      get:
+        description: "내 정보"
+        operationId: read
+        responses:
+          "200":
+            description: "response"
+            schema:
+              $ref: "#/definitions/MyPage"
+          default: 
+            description: "unexpected error"
+            schema: 
+              $ref: "#/definitions/ErrorModel"
+    /Mypage/:userId:
+      get:
+        description: "다른 사람 정보"
+        operationId: read
+        response:
+          "200":
+            description: "response"
+            schema:
+              $ref: "#/definitions/MyPage"
+          default:
+            descrition: "undexpected error"
+            schema:
+              $ref: "#/definitions/ErrorModel"
+
+    /Mypage/update_info:
+      put:
+        description: "내정보 수정"
+        operationId: edit info
+        parameters:
+          -
+            name: "My infomation"
+            in: "body"
+            description: "개인 정보와 프로필 사진 form으로 전송"
+            schema:
+              type: object
+              properties:
+                birth:
+                  type: number
+                username:
+                  type: string
+        responses:
+          "200":
+            description: "response"
+            schema:
+              properties:
+                messege:
+                  type: "string"
+          default: 
+            description: "unexpected error"
+            schema: 
+              $ref: "#/definitions/ErrorModel"
+    /Mypage/update_info/update_profileIMG:
+      post:
+        description: "프로필사진 바꾸기"
+        operationId: change img
+        parameters:
+          -
+            name: "My profileIMG"
+            in: "body"
+            schema:
+              type: object
+              properties:
+                myfile:
+                  type: string
+        responses:
+          "200":
+            description: "response"
+            schema:
+              properties:
+                messege:
+                  type: "string"
+          default: 
+            description: "unexpected error"
+            schema: 
+              $ref: "#/definitions/ErrorModel"
+    /post/postCreate:
+      post:
+        description: "postCreate"
+        parameters:
+        -
+          name: "Post"
+          in: "body"
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              id:
+                type: string
+              imageName: 
+                type: string
+              text:
+                type: string
+        responses:
+          "200":
+            description: "response"
+            schema:
+              properties:
+                messege:
+                  type: "string"
+          default: 
+            description: "unexpected error"
+            schema: 
+              $ref: "#/definitions/ErrorModel"
+    /post/postDelete:
+      post:
+        responses:
+          "200":
+            descripton: "response"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/ErrorModel"
+    /feed/:
+      get:
+        responses:
+          "200":
+            description: "response"
+            schema:
+              $ref: "#/definitions/Posts" 
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/ErrorModel"
+    /feed/:post_id/writeComments:
+      post:
+        parameters:
+          -
+            name: "write comments"
+            in: "body"
+            schema:
+              type: object
+              properties:
+                comments:
+                  type: string 
+        responses:
+          "200":
+            description: "response"
+            schema:
+              $ref: "#/definitions/Posts"   
+          default:
+            description: "unexpexted error"
+            schema:
+              $ref: "#/definitions/ErrorModel"
+              
+      /feed/:post_id:
+      get:
+        responses:
+          "200":
+            description: "response"
+            schema:
+              $ref: "#/definitions/Posts"
+          default:
+            desciption: "unexpexted error"
+            schema:
+              $ref: "#/definitions/ErrorModel"
+  definitions: 
+    MyPage:
+      type: "object"
+      properties:
+        user:
+          type: "object"
+          properties:
+            username:
+              type: "string"
+            id:
+              type: "string"
+            pw:
+              type: "string"
+            birth: 
+              type: "string"
+            active:
+              type: "boolean"
+            profileIMG:
+              type: "string"
+            profilePath:
+              type: string
+            following:
+              type: "array"
+              items:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  _id:
+                    type: string
+            follower: 
+              type: "array"
+              items:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  _id:
+                    type: string
+            likedPost:
+              type: "array"
+              items:
+                type: object
+                properties:
+                  postName:
+                    type: "string"
+                  _id:
+                    type: "string" 
+        posts:
+          type: object           
+          properties:
+            username:
+              type: string
+            id:
+              type: string
+            liker_id: 
+              type: array
+              items:
+                type: string
+            imageName: 
+              type: string
+            imagePath:
+              type: string
+            text:
+              type: string
+            comments:
+              type: array
+              items:
+                type: object
+                properties:
+                  body:
+                    type: string
+                  author:
+                    type: string
+                  date: 
+                    type: number
+    Posts:
+      type: object           
+      properties:
+        username:
+          type: string
+        id:
+          type: string
+        liker_id: 
+          type: array
+          items:
+            type: string
+        imageName: 
+          type: string
+        imagePath:
+          type: string
+        text:
+          type: string
+        comments:
+          type: array
+          items:
+            type: object
+            properties:
+              body:
+                type: string
+              author:
+                type: string
+              date: 
+                type: number
+                
+    ErrorModel: 
+      type: "object"
+      properties: 
+        message: 
+          type: "string"
