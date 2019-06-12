@@ -58,6 +58,7 @@ const ReadMypage = async (req,res)=>{
             if(!user) res.status(404).json({messege: "Not found"});
             
             const posts = await Post.find({id:tokenDecoded.id});
+            posts.reverse();
             res.status(200).json({
                 posts,
                 user
@@ -72,6 +73,7 @@ const readOthers = async(req,res)=>{
     try{
         const user = findOne({id:req.params.userId});
         const post = findOne({id:user.id});
+        post.reverse();
         res.status(200).json({
             user,
             post

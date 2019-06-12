@@ -7,7 +7,7 @@ const fs = require('fs');
 const allRead = async (req,res)=>{
     try{
         const posts = await Post.find();
-        
+        posts.reverse();
         res.json(posts);
     }catch(e){
         res.json({error: e.stack}).end();
@@ -38,6 +38,7 @@ const readPost = async(req,res)=>{
         const tokenDecoded = await jwt.verify(token, req.app.get('jwt-secret'));
         const post  = await Post.findOne({_id:req.params.post_id});
         const user = await User.findOne({id:tokenDecoded.id});
+        post.reverse();
         res.status(200).json({
             post,
             profilePath: user.profilePath
@@ -70,8 +71,9 @@ const like = async(req,res)=>{
             if(user.likedPost.includes(postId)){
                 const index = user.likedPost.indexOf(postId);
                 user.splice(index,0);
-                user,save();
+                user.save();
             }
+            res.status(200).json({"messege":"success"});
         }
     }catch(e){
         res.json({error:e.stack}).end();
