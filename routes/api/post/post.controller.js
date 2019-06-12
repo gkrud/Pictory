@@ -13,7 +13,7 @@ const postCreate = async (req,res)=>{
         const user = await User.findOne({id:tokenDecoded.id});
         const imageName = req.file.filename;
         if(imageName){
-            const path = `http://54.180.116.34:1212/static/images/${imageName}`;
+            const path = `http://54.180.116.34/static/images/${imageName}`;
             user.imageName.push(imageName);
             user.imagePath.push(path);
             const post = new Post();
@@ -21,7 +21,7 @@ const postCreate = async (req,res)=>{
             post.text = text;
             post.username = user.username;
             post.imageName = imageName;
-            post.imagePath = `http://54.180.116.34:1212/static/images/${imageName}`;
+            post.imagePath = `http://54.180.116.34/static/images/${imageName}`;
             post.save();
             user.save();
             res.status(200).json({messege:'success'}).end();

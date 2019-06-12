@@ -33,13 +33,13 @@ const UpdateMypage_profileIMG = async (req,res)=>{
         const user = await User.findOne({id:tokenDecoded.id});
         user.imageName.push(imageName);
         user.profileIMG = imageName;
-        user.profilePath = `http://54.180.116.34:1212/static/images/${imageName}`
-        user.imagePath.push(`http://54.180.116.34:1212/static/images/${user.imageName}`);
+        user.profilePath = `http://54.180.116.34/static/images/${imageName}`
+        user.imagePath.push(`http://54.180.116.34/static/images/${user.imageName}`);
         post.username = user.username;
         post.text =  req.body.text;
         post.id = user.id;
         post.imageName = imageName;
-        post.imagePath = `http://54.180.116.34:1212/static/images/${user.imageName}`;
+        post.imagePath = `http://54.180.116.34/static/images/${user.imageName}`;
         post.save();
         user.save();
         res.status(200).json({messege:'success changeprofile'});
