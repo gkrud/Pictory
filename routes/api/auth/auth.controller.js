@@ -6,9 +6,9 @@ const register = (req, res) => {
     const { username,id,pw,birth,active } = req.body;
     const profileIMG = req.file.filename;
     const imageName = req.file.filename;
-    const profilePath = `http://10.156.145.132:1212/static/images/${imageName}`
+    const profilePath = `http://54.180.116.34:1212/static/images/${imageName}`
     const imagePath = [];
-    imagePath.push(`http://10.156.145.132:1212/static/images/${imageName}`)
+    imagePath.push(`http://54.180.116.34:1212/static/images/${imageName}`)
 
     // create a new user if does not exist
     const userCreate = (user) => {
@@ -25,7 +25,7 @@ const register = (req, res) => {
         post.id = user.id;
         post.imageName = user.imageName;
         post.text = '';
-        post.imagePath = `http://10.156.145.132:1212/static/images/${user.imageName}`;
+        post.imagePath = `http://54.180.116.34:1212/static/images/${user.imageName}`;
 
         post.save((err)=>{
             if(err){
