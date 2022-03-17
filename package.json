@@ -33,6 +33,6 @@
     "nodemailer": "^6.0.0",
     "nodemon": "^1.18.10",
     "path": "^0.12.7",
-    "swagger-ui-dist": "^3.22.1"
+    "swagger-ui-dist": "^4.1.3"
   }
 }
